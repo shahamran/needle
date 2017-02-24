@@ -2,6 +2,7 @@
 
 # imports
 import subprocess
+import argparse
 
 # constants
 ENV_NAME = 'needle'
@@ -17,7 +18,7 @@ def errorExit(msg):
 
 def init():
     """Start with this"""
-    subprocess.call('deactivate.bat')
+    pass
 
 
 def checkConda():
@@ -43,10 +44,19 @@ def createEnv():
                         ' --file ' + REQ_FILE)
 
 
-def runNotebook():
+def runNotebook(windows=True):
     """Runs the jupyter notebook"""
     print('Running notebook...\n')
-    subprocess.run(['start.bat', ENV_NAME, NB_FILE])
+    if windows:
+        try:
+            subprocess.run(['start.bat', ENV_NAME, NB_FILE])
+        except:
+            runNotebook(windows=False)
+    else:
+        try:
+            subprocess.run(['start.sh', ENV_NAME, NB_FILE])
+        except:
+            errorExit('error! could not run notebook')
 
 
 def main():
@@ -54,7 +64,7 @@ def main():
     checkConda()
     createEnv()
     runNotebook()
-    
+
 
 if __name__ == '__main__':
     main()
