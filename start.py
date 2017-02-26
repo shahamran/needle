@@ -37,6 +37,19 @@ def error_exit(msg):
     exit(1)
 
 
+def parseArgs():
+    """Parses program's arguments and return them as a namespace"""
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('platform', type=str, choices=[WIN, LIN],
+                        help='the platform on which the script runs')
+    parser.add_argument('-e', '--env', type=str, default=ENV_NAME,
+                        help='relevant conda environment name')
+    parser.add_argument('-d', '--directory', type=str, default=SOURCE_DIR,
+                        metavar='root_dir',
+                        help="project's root directory")
+    return parser.parse_args()
+
+
 def init(platform, env=None, source_dir=SOURCE_DIR):
     """Start with this"""
     global START_CMD
@@ -89,24 +102,11 @@ def run_notebook():
     """Runs the jupyter notebook"""
     print('Running notebook...')
     try:
-        subprocess.run([START_CMD, ENV_NAME, NB_FILE]).check_returncode()
+        subprocess.run([START_CMD, ENV_NAME, NB_FILE])
     except subprocess.CalledProcessError as e:
         error_exit(e)
     except:
         error_exit('could not run notebook')
-
-
-def parseArgs():
-    """Parses program's arguments and return the platform (windows/linux)"""
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('platform', type=str, choices=[WIN, LIN],
-                        help='the platform on which the script runs')
-    parser.add_argument('-e', '--env', type=str, default=ENV_NAME,
-                        help='relevant conda environment name')
-    parser.add_argument('-d', '--directory', type=str, default=SOURCE_DIR,
-                        metavar='root_dir',
-                        help="project's root directory")
-    return parser.parse_args()
 
 
 def main():
