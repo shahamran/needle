@@ -27,5 +27,8 @@ This allows us to write nicely presented code and use interactive widgets to exp
 4. Run `jupyter notebook`, and click the `Aliends.ipynb` file in the opened browser window
 5. When finished, run `deactivate` (or `source deactivate` on linux)
 
+##### FAQ
+- __`conda` commands exit with an error__: Try re-installing conda locally - i.e. select 'Just for me' in the installation wizrd. This may solve permission errors.
+
 ### Static version
 Visit the [Github rendering of the notebook](/Aliens.ipynb).
